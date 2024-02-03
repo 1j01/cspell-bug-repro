@@ -31,6 +31,7 @@ function saveJson(best) {
 }
 
 let index = -1;
+let maybeDone = false;
 function trim() {
 	const words = cspellJson.words;
 	const originalWords = words.slice();
@@ -39,12 +40,18 @@ function trim() {
 	} else {
 		index -= 1;
 		if (index < 0) {
+			if (maybeDone) {
+				console.log('Word list minimized. There may be a smaller repro, but removing any one word does not reproduce the bug.');
+				process.exit(0);
+			}
 			index = words.length - 1;
+			maybeDone = true;
 		}
 	}
 	words.splice(index, 1);
 	saveJson();
 	if (bugTest()) {
+		maybeDone = false;
 		console.log('Bug reproduced without word:', originalWords[index]);
 		// Avoids losing the best-so-far version if the script is interrupted
 		// while testing removing a word, when it doesn't reproduce the bug without it.

@@ -1,0 +1,10 @@
+{
+  "name": "cspell-bug-repro",
+  "version": "0.0.0",
+  "devDependencies": {
+    "cspell-cli": "^8.3.0"
+  },
+  "scripts": {
+    "spellcheck": "cspell-cli lint ."
+  }
+}

@@ -8,6 +8,8 @@ const cspellJson = require('./cspell.json');
 
 const BUG_TEST_COMMAND = "cspell-cli lint ."
 const BUG_OUTPUT = "TypeError";
+const COMMIT_COMMAND = 'git add cspell.json && git commit -m "Simplify bug repro case"';
+const COMMIT_INTERVAL = 1000 * 60;
 
 let lastOutput = null;
 function bugTest() {
@@ -16,10 +18,15 @@ function bugTest() {
 	return output.stdout.includes(BUG_OUTPUT);
 }
 
+let lastCommitTime = 0;
 function saveJson(best) {
 	const json = JSON.stringify(cspellJson, null, "\t");
 	const filename = best ? 'cspell.best-so-far.json' : 'cspell.json';
 	fs.writeFileSync(path.join(__dirname, filename), json);
+	if (best && Date.now() - lastCommitTime > COMMIT_INTERVAL) {
+		lastCommitTime = Date.now();
+		child_process.execSync(COMMIT_COMMAND, { encoding: 'utf8' });
+	}
 }
 
 function trim() {

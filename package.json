@@ -5,6 +5,7 @@
     "cspell-cli": "^8.3.0"
   },
   "scripts": {
-    "spellcheck": "cspell-cli lint ."
+    "spellcheck": "cspell-cli lint .",
+    "simplify-repro": "node trim.js"
   }
 }

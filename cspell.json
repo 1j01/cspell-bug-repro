@@ -1,6 +1,6 @@
 {
 	"ignorePaths": [
-		".history", // VS Code "Local History" extension
+		".history",
 		"node_modules"
 	],
 	"words": [

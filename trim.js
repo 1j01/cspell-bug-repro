@@ -1,4 +1,4 @@
-// Load cspell.json and remove random words iteratively, to simplify the bug repro case.
+// Load cspell.json and remove words iteratively, to simplify the bug repro case.
 // Usage: node trim.js
 
 const fs = require('fs');
@@ -10,6 +10,7 @@ const BUG_TEST_COMMAND = "cspell-cli lint ."
 const BUG_OUTPUT = "TypeError";
 const COMMIT_COMMAND = 'git add cspell.json && git commit -m "Simplify bug repro case"';
 const COMMIT_INTERVAL = 1000 * 60;
+const RANDOM = false;
 
 let lastOutput = null;
 function bugTest() {
@@ -29,10 +30,18 @@ function saveJson(best) {
 	}
 }
 
+let index = -1;
 function trim() {
 	const words = cspellJson.words;
 	const originalWords = words.slice();
-	const index = Math.floor(Math.random() * words.length);
+	if (RANDOM) {
+		index = Math.floor(Math.random() * words.length);
+	} else {
+		index -= 1;
+		if (index < 0) {
+			index = words.length - 1;
+		}
+	}
 	words.splice(index, 1);
 	saveJson();
 	if (bugTest()) {

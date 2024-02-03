@@ -28,7 +28,12 @@ TypeError: Cannot read properties of undefined (reading '0')
     at _getDictionaryInternal (node_modules/cspell-lib/dist/esm/SpellingDictionary/Dictionaries.js:50:12)
 ```
 
-Also note that in VS Code, with the Code Spell Checker extension installed, a few words are reported as misspelled when viewing the dictionary file:
+I have trimmed the dictionary file by brute force, cycling through the list and removing words as long as the error persisted.
+(See `trim.js`)
+
+Also note that in VS Code, with the Code Spell Checker extension installed, a few words are reported as misspelled when viewing the dictionary file.
+
+Before trimming the dictionary file, the following words were reported as misspelled:
 
 - datetime
 - desaturated
@@ -38,4 +43,7 @@ Also note that in VS Code, with the Code Spell Checker extension installed, a fe
 - ᐊᓂᔑᓈᐯᒧᐎᓐ
 - ᓀᐦᐃᔭᐍᐏᐣ
 
-Of these, when viewing this readme file, "datetime" is not considered misspelled, but the rest are.
+Of these, when viewing this readme file, "datetime" was not considered misspelled, but the rest were.
+
+Now, after trimming, only one word is reported as misspelled in the dictionary file:
+- ᓀᐦᐃᔭᐍᐏᐣ
